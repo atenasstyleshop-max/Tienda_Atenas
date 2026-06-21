@@ -1,0 +1,12 @@
+/* TOAST (notificación propia, no nativa del navegador) */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: linear-gradient(135deg, var(--rosa-dark), var(--lila-dark));
+  color: #fff; padding: 12px 22px; border-radius: 50px; font-size: 14px;
+  font-weight: 500; font-family: var(--font-texto); z-index: 999;
+  transition: transform 0.3s; white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 10px 30px rgba(155,95,192,0.35);
+}
+.toast .icon-svg { width: 16px; height: 16px; flex-shrink: 0; }
+.toast.show { transform: translateX(-50%) translateY(0); }

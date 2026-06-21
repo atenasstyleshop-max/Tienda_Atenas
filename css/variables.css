@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Jost:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Paleta lila + rosa claro */
+  --lila-bg: #F6EEFB;
+  --lila: #C9A6E0;
+  --lila-dark: #9B5FC0;
+  --rosa-bg: #FFF0F6;
+  --rosa: #FFB8DA;
+  --rosa-dark: #F25FA4;
+  --negro: #3A2A45;
+  --blanco: #FFFCFE;
+  --gris-10: #FAF5FC;
+  --gris-30: #ECE0F2;
+  --gris-60: #9C8DA8;
+  --verde: #1DB954;
+  --amarillo: #F59E0B;
+  --rojo: #EF4444;
+
+  --font-titulo: 'Baloo 2', sans-serif;
+  --font-texto: 'Jost', sans-serif;
+}
