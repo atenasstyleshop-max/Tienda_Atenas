@@ -63,12 +63,14 @@ async function generarFacturaPDF(cliente, items, totales) {
   doc.text(NEGOCIO.ciudad, centerX, y, { align: 'center' }); y += 13;
   doc.text(`${NEGOCIO.telefono}  |  ${NEGOCIO.instagram}`, centerX, y, { align: 'center' }); y += 18;
 
-  lineaPunteada(doc, y); y += 18;
+  lineaPunteada(doc, y); y += 14;
 
+  doc.setFillColor(247, 244, 250);
+  doc.rect(25, y - 9, 330, 15, 'F');
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(...gris);
-  doc.text('COMPROBANTE DE VENTA', centerX, y, { align: 'center' });
+  doc.text('COTIZACIÓN DE PEDIDO', centerX, y, { align: 'center' });
   y += 22;
 
   const filas = [
@@ -94,18 +96,18 @@ async function generarFacturaPDF(cliente, items, totales) {
   doc.setFontSize(8.5);
   doc.setTextColor(...gris);
   doc.text('PRODUCTO', 30, y);
-  doc.text('CANT.', 250, y, { align: 'right' });
-  doc.text('PRECIO', 300, y, { align: 'right' });
-  doc.text('SUBTOTAL', 350, y, { align: 'right' });
+  doc.text('CANT.', 220, y, { align: 'center' });
+  doc.text('PRECIO', 290, y, { align: 'right' });
+  doc.text('TOTAL', 350, y, { align: 'right' });
   y += 14;
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9.5);
   doc.setTextColor(...negro);
   items.forEach(i => {
-    doc.text(i.nombre, 30, y, { maxWidth: 190 });
-    doc.text(String(i.cantidad), 250, y, { align: 'right' });
-    doc.text(formatCOP(i.precio), 300, y, { align: 'right' });
+    doc.text(i.nombre, 30, y, { maxWidth: 175 });
+    doc.text(String(i.cantidad), 220, y, { align: 'center' });
+    doc.text(formatCOP(i.precio), 290, y, { align: 'right' });
     doc.text(formatCOP(i.precio * i.cantidad), 350, y, { align: 'right' });
     y += 18;
   });
@@ -121,6 +123,16 @@ async function generarFacturaPDF(cliente, items, totales) {
     y += 18;
   }
 
+  if (totales.domicilio > 0) {
+    doc.setFontSize(9.5);
+    doc.setTextColor(...gris);
+    doc.text('Domicilio', 30, y);
+    doc.text(formatCOP(totales.domicilio), 350, y, { align: 'right' });
+    y += 18;
+  }
+
+  doc.setFillColor(253, 240, 248);
+  doc.roundedRect(20, y - 12, 340, 20, 6, 6, 'F');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(13);
   doc.setTextColor(...rosaDark);
@@ -137,19 +149,12 @@ async function generarFacturaPDF(cliente, items, totales) {
   doc.text(cliente.pagoLabel, centerX, y + 1, { align: 'center' });
   y += 38;
 
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(...gris);
-  doc.text('¡Gracias por tu compra!', centerX, y, { align: 'center' });
-  y += 16;
-
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(...rosaDark);
   doc.text(NEGOCIO.instagram, centerX, y, { align: 'center' });
 
   const nombreArchivo = `Factura-${cliente.nombre.replace(/\s+/g, '-')}-${Date.now()}.pdf`;
-  doc.save(nombreArchivo);
-  return nombreArchivo;
+  return { blob: doc.output('blob'), nombreArchivo };
 }
 
 function lineaPunteada(doc, y) {

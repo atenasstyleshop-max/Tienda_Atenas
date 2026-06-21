@@ -101,12 +101,12 @@
 .overlay.open .modal { transform: translateY(0); }
 
 .modal-img {
-  width: 100%; aspect-ratio: 4/3; border-radius: 16px; background: var(--lila-bg);
+  width: 100%; aspect-ratio: 4/3; border-radius: 16px; background: #fff;
   display: flex; align-items: center; justify-content: center; overflow: hidden;
-  margin-bottom: 16px; color: var(--lila-dark);
+  margin-bottom: 16px; color: var(--lila-dark); border: 1px solid var(--gris-30);
 }
 .modal-img .icon-svg { width: 70px; height: 70px; }
-.modal-img img { width: 100%; height: 100%; object-fit: cover; }
+.modal-img img { width: 100%; height: 100%; object-fit: contain; }
 .modal h3 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
 .modal-desc { font-size: 13px; color: var(--gris-60); line-height: 1.6; margin-bottom: 14px; }
 .modal-precio { font-family: var(--font-titulo); font-size: 26px; color: var(--rosa-dark); font-weight: 700; margin-bottom: 16px; }

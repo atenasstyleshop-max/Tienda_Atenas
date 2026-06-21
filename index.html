@@ -126,70 +126,75 @@
     <h3>Datos del pedido</h3>
 
     <div class="form-grid">
-  <div class="form-group"><label>Nombre completo</label><input type="text" id="ch-nombre" placeholder="Tu nombre"></div>
-  <div class="form-group"><label>WhatsApp</label><input type="tel" id="ch-tel" placeholder="300 123 4567"></div>
+  <div class="form-group"><label>Nombre</label><input type="text" id="ch-nombre" placeholder="Tu nombre"></div>
+  <div class="form-group"><label>Apellido</label><input type="text" id="ch-apellido" placeholder="Tu apellido"></div>
 </div>
+<div class="form-group"><label>WhatsApp</label><input type="tel" id="ch-tel" placeholder="300 123 4567"></div>
 
 <div class="form-group">
   <label>¿Te encuentras en Cartagena?</label>
-  <div class="pago-opciones">
-    <div class="pago-opt selected" id="opt-ciudad-si" onclick="seleccionarUbicacion(true)">
+  <div class="pago-opciones pago-opciones-sm">
+    <div class="pago-opt pago-opt-sm selected" id="opt-ciudad-si" onclick="seleccionarUbicacion(true)">
       <span class="pago-opt-label">Sí, en Cartagena</span>
     </div>
-    <div class="pago-opt" id="opt-ciudad-no" onclick="seleccionarUbicacion(false)">
+    <div class="pago-opt pago-opt-sm" id="opt-ciudad-no" onclick="seleccionarUbicacion(false)">
       <span class="pago-opt-label">Fuera de Cartagena</span>
     </div>
   </div>
 </div>
 
 <div id="bloque-cartagena">
-  <div class="form-group"><label>Barrio</label><input type="text" id="ch-barrio" placeholder="Ej: Manga, Bocagrande..."></div>
+ <div class="form-group">
+    <label>Barrio</label>
+    <div class="custom-select" id="barrio-select-wrap">
+      <button type="button" class="custom-select-btn" onclick="toggleBarrioDropdown()">
+        <span id="barrio-select-label">Selecciona tu barrio...</span>
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="custom-select-list" id="barrio-select-list"></div>
+    </div>
+  </div>
   <div class="form-group"><label>Dirección completa</label><input type="text" id="ch-direccion" placeholder="Calle, carrera, número..."></div>
   <div class="form-group"><label>Punto de referencia</label><input type="text" id="ch-referencia" placeholder="Ej: frente al parque, casa azul..."></div>
 </div>
 
 <div id="bloque-fuera" style="display:none;">
-  <div class="form-group"><label>Ciudad / Municipio</label><input type="text" id="ch-ciudad" placeholder="Ej: Bogotá, Medellín..."></div>
-  <div class="form-group"><label>Barrio</label><input type="text" id="ch-barrio-fuera" placeholder="Barrio"></div>
-  <div class="form-group"><label>Dirección / Punto de referencia</label><input type="text" id="ch-direccion-fuera" placeholder="Dirección y referencia"></div>
+  <div class="form-group"><label>Ciudad</label><input type="text" id="ch-ciudad" placeholder="Ej: Bogotá, Medellín..."></div>
+  <div class="form-group"><label>Dirección completa / Barrio</label><input type="text" id="ch-direccion-fuera" placeholder="Dirección y barrio"></div>
+  <div class="form-group"><label>Número de cédula</label><input type="text" id="ch-cedula" placeholder="Para la guía de envío"></div>
 </div>
 
 <div class="form-group" id="metodo-cartagena">
   <label>Método de pago</label>
-  <div class="pago-opciones">
-    <div class="pago-opt selected" id="opt-efectivo" onclick="seleccionarPago('efectivo')">
-      <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+  <div class="pago-opciones pago-opciones-sm">
+    <div class="pago-opt pago-opt-sm selected" id="opt-efectivo" onclick="seleccionarPago('efectivo')">
       <span class="pago-opt-label">Efectivo</span>
     </div>
-    <div class="pago-opt" id="opt-wompi" onclick="seleccionarPago('wompi')">
-      <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-      <span class="pago-opt-label">Pagar en línea</span>
+    <div class="pago-opt pago-opt-sm" id="opt-transferencia" onclick="seleccionarPago('transferencia')">
+      <span class="pago-opt-label">Transferencia</span>
     </div>
   </div>
-  <div style="font-size:11.5px;color:var(--gris-60);margin-top:6px;">El valor del domicilio es adicional.</div>
+ 
 </div>
 
 <div class="form-group" id="metodo-fuera" style="display:none;">
   <label>Método de pago</label>
-  <div class="pago-opciones">
-    <div class="pago-opt selected" id="opt-contraentrega" onclick="seleccionarPago('contraentrega')">
-      <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/><path d="M3.3 7.4 12 12l8.7-4.6M12 12v9"/></svg>
+  <div class="pago-opciones pago-opciones-sm">
+    <div class="pago-opt pago-opt-sm selected" id="opt-contraentrega" onclick="seleccionarPago('contraentrega')">
       <span class="pago-opt-label">Contra Entrega</span>
     </div>
-    <div class="pago-opt" id="opt-wompi-fuera" onclick="seleccionarPago('wompi')">
-      <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-      <span class="pago-opt-label">Pagar en línea</span>
+    <div class="pago-opt pago-opt-sm" id="opt-transferencia-fuera" onclick="seleccionarPago('transferencia')">
+      <span class="pago-opt-label">Transferencia</span>
     </div>
   </div>
 </div>
 
-<div class="form-group" id="bloque-cedula" style="display:none;">
-  <label>Número de cédula</label>
-  <input type="text" id="ch-cedula" placeholder="Para la guía de envío">
+<div id="aviso-envio-fuera" style="display:none;background:var(--lila-bg);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--negro);margin-bottom:10px;">
+  El valor del envío se cotiza después y es adicional.
 </div>
 
-<div id="aviso-contraentrega" style="display:none;background:var(--lila-bg);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--negro);margin-bottom:14px;">
-  El valor del envío se cotiza después, según tu ciudad.
+<div id="aviso-contraentrega" style="display:none;background:#FFF7E0;border-radius:12px;padding:12px 14px;font-size:12.5px;color:#7A5B00;margin-bottom:14px;">
+  Se paga contra entrega, pero el valor del envío se paga anticipado.
 </div>
     
 
@@ -221,9 +226,9 @@
 <script src="js/factura-pdf.js"></script>
 
 <script>
-  // Rellena los iconos de cerrar (✕) por SVG sin repetir código en el HTML
   document.querySelectorAll('.modal-close-btn, .cart-close').forEach(b => b.innerHTML = ICONS.close);
   initProductos();
+  initBarrios();
 </script>
 </body>
 </html>

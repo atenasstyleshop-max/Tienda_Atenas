@@ -25,3 +25,8 @@ async function fetchProductos() {
 
   return data || [];
 }
+async function fetchBarrios() {
+  const { data, error } = await sb.from('barrios_cartagena').select('*').order('nombre');
+  if (error) { console.error('Error cargando barrios:', error); return []; }
+  return data || [];
+}

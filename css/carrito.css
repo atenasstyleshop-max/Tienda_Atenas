@@ -126,3 +126,31 @@
   transition: background 0.2s; margin-top: 8px;
 }
 .btn-enviar-pedido:hover { background: #1DA851; }
+.pago-opciones-sm { justify-content: center; flex-wrap: wrap; }
+.pago-opt-sm { flex: 0 0 auto; padding: 9px 18px; }
+
+/* SELECTOR DE BARRIO PERSONALIZADO */
+.custom-select { position: relative; }
+.custom-select-btn {
+  width: 100%; padding: 12px 14px; border: 1.5px solid var(--gris-30); border-radius: 12px;
+  background: #fff; font-family: var(--font-texto); font-size: 14px; color: var(--negro);
+  display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+  text-align: left;
+}
+.custom-select-btn:hover { border-color: var(--rosa-dark); }
+.custom-select-btn .icon-svg { width: 16px; height: 16px; color: var(--gris-60); flex-shrink: 0; }
+.custom-select-list {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+  background: #fff; border: 1.5px solid var(--gris-30); border-radius: 12px;
+  max-height: 220px; overflow-y: auto; z-index: 50;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  display: none;
+}
+.custom-select-list.open { display: block; }
+.custom-select-item {
+  padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--gris-10);
+}
+.custom-select-item:last-child { border-bottom: none; }
+.custom-select-item:hover { background: var(--lila-bg); }
+.custom-select-item .precio { color: var(--rosa-dark); font-weight: 700; font-size: 12px; }
