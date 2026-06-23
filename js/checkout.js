@@ -122,29 +122,34 @@ async function enviarPedido() {
   const e4 = String.fromCodePoint(0x1F4CB);
   const pt = String.fromCodePoint(0x2022);
 
+  const separador = '\u2500'.repeat(40);
+
   const lineas = [
     `Hola, Atenas ${e1}`,
     ``,
     `estoy interesad@ en este pedido ${e2}`,
     ``,
-    `*Mis datos:*`,
+    `Estos son mis datos:`,
+    ``,
     `${pt} Nombre: ${nombreCompleto}`,
     `${pt} Tel\u00e9fono: ${tel}`,
     cedula ? `${pt} C\u00e9dula: ${cedula}` : null,
     `${pt} Ciudad: ${ciudad}`,
     `${pt} Direcci\u00f3n: ${direccion}`,
-    `${pt} Pago: ${pagoLabel}`,
+    `${pt} M\u00e9todo de pago: ${pagoLabel}`,
     !ubicacionCartagena ? `${pt} El env\u00edo se cotiza despu\u00e9s.` : null,
     metodoPago === 'contraentrega' ? `${pt} El env\u00edo se paga anticipado.` : null,
     ``,
+    separador,
     `*Resumen del pedido* ${e4}`,
     ``,
-    ...carrito.map(i => `${pt} ${i.nombre} x${i.cantidad} ........... ${formatCOP(i.precio * i.cantidad)}`),
+    ...carrito.map(i => `${pt} ${i.nombre} (x${i.cantidad})  *${formatCOP(i.precio * i.cantidad)}*`),
     ``,
-    descuento > 0 ? `Descuento aplicado: -${formatCOP(descuento)}` : null,
-    domicilio > 0 ? `Domicilio: ${formatCOP(domicilio)}` : null,
+    descuento > 0 ? `Descuento aplicado: *-${formatCOP(descuento)}*` : null,
+    domicilio > 0 ? `Domicilio: *${formatCOP(domicilio)}*` : null,
     ``,
     `*TOTAL: ${formatCOP(total)}*`,
+    separador,
     ``,
     `Quedo atenta a la Confirmaci\u00f3n ${e3}`,
   ].filter(l => l !== null).join('\n');
