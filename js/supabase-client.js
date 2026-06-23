@@ -13,7 +13,7 @@
 async function fetchProductos() {
   const { data, error } = await sb
     .from('productos')
-    .select('id, referencia, nombre, precio, stock, categoria, foto_url, descripcion')
+    .select('id, referencia, nombre, precio, stock, categoria, foto_url, descripcion, tipo_venta')
     .eq('mostrar_en_tienda', true)
     .order('stock', { ascending: false });
 

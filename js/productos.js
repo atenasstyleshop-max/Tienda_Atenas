@@ -87,7 +87,10 @@ function renderProductos() {
         <div class="prod-info">
           <div class="prod-nombre" onclick="${agotado ? '' : `abrirModal('${p.id}')`}">${p.nombre}</div>
           <div class="prod-footer">
-            <div class="prod-precio">${formatCOP(p.precio)}</div>
+            <div class="prod-precio">
+            ${formatCOP(p.precio)}
+            <span class="prod-tipo-badge ${p.tipo_venta === 'detal' ? 'detal' : 'mayor'}">${p.tipo_venta === 'detal' ? 'Al detal' : 'Por mayor'}</span>
+          </div>
             ${controlHtml}
           </div>
         </div>
@@ -112,7 +115,8 @@ function abrirModal(id) {
 
   document.getElementById('modal-nombre').textContent = prodModal.nombre;
   document.getElementById('modal-desc').textContent = getDescripcion(prodModal);
-  document.getElementById('modal-precio').textContent = formatCOP(prodModal.precio);
+ const tipoBadge = `<span class="prod-tipo-badge ${prodModal.tipo_venta === 'detal' ? 'detal' : 'mayor'}">${prodModal.tipo_venta === 'detal' ? 'Al detal' : 'Por mayor'}</span>`;
+  document.getElementById('modal-precio').innerHTML = formatCOP(prodModal.precio) + ' ' + tipoBadge;
   document.getElementById('modal-qty').textContent = 1;
 
   const stockInfo = getStockInfo(prodModal.stock);
