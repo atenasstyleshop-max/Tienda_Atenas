@@ -116,67 +116,6 @@ async function enviarPedido() {
     contraentrega: 'Contra Entrega'
   }[metodoPago] || metodoPago;
 
-  const datosCliente = { nombre: nombreCompleto, tel, ciudad, direccion, cedula, pagoLabel };
-
-  const e1 = String.fromCodePoint(0x1FA75);
-  const e2 = String.fromCodePoint(0x1F4E6);
-  const e3 = String.fromCodePoint(0x2728);
-  const pt = String.fromCodePoint(0x2022);
-
-  const lineas = [
-    `Hola, Atenas ${e1}`,
-    ``,
-    `estoy interesad@ en este pedido ${e2}`,
-    ``,
-    `Estos son mis datos:`,
-    ``,
-    `${pt} Nombre: ${nombreCompleto}`,
-    `${pt} Tel\u00e9fono: ${tel}`,
-    cedula ? `${pt} C\u00e9dula: ${cedula}` : null,
-    `${pt} Ciudad: ${ciudad}`,
-    `${pt} Direcci\u00f3n: ${direccion}`,
-    `${pt} M\u00e9todo de pago: ${pagoLabel}`,
-    !ubicacionCartagena ? `${pt} El valor del env\u00edo se cotiza despu\u00e9s y es adicional.` : null,
-    metodoPago === 'contraentrega' ? `${pt} Se paga contra entrega, pero el env\u00edo se paga anticipado.` : null,
-    ``,
-    `Quedo atenta a la Confirmaci\u00f3n ${e3}`,
-  ].filter(l => l !== null).join('\n');
-
-  const urlWA = `https://wa.me/${NEGOCIO.whatsapp}?text=${encodeURIComponent(lineas)}`;
-
-  /* Intentar generar PDF */
-  let pdfData = null;
-  try {
-    pdfData = await generarFacturaPDF(datosCliente, carrito, { subtotal, descuento, domicilio, total });
-  } catch (e) {
-    console.error('Error PDF:', e);
-  }
-
-  /* CELULAR con Web Share API — manda mensaje + PDF juntos */
-  if (pdfData && navigator.canShare) {
-    const archivo = new File([pdfData.blob], pdfData.nombreArchivo, { type: 'application/pdf' });
-    if (navigator.canShare({ files: [archivo] })) {
-      try {
-        await navigator.share({
-          files: [archivo],
-          text: lineas,
-          title: 'Pedido Atenas Style Shop'
-        });
-        cerrarCheckout();
-        showToast('Pedido enviado', 'check');
-        return;
-      } catch (err) {async function enviarPedido() {
-  const datos = validarFormulario();
-  if (!datos) return;
-
-  const { nombreCompleto, tel, ciudad, direccion, cedula } = datos;
-  const { subtotal, descuento, domicilio, total } = totalConDomicilio();
-  const pagoLabel = {
-    efectivo: 'Efectivo',
-    transferencia: 'Transferencia',
-    contraentrega: 'Contra Entrega'
-  }[metodoPago] || metodoPago;
-
   const e1 = String.fromCodePoint(0x1FA75);
   const e2 = String.fromCodePoint(0x1F4E6);
   const e3 = String.fromCodePoint(0x2728);
