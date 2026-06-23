@@ -132,63 +132,70 @@ async function enviarPedido() {
     direccion = dirFuera;
   }
 
- const { subtotal, descuento, domicilio, total } = totalConDomicilio();
-  const pagoLabel = { efectivo: 'Efectivo', transferencia: 'Transferencia', contraentrega: 'Contra Entrega' }[metodoPago];
+  const { subtotal, descuento, domicilio, total } = totalConDomicilio();
+  const pagoLabel = { efectivo: 'Efectivo', transferencia: 'Transferencia', contraentrega: 'Contra Entrega' }[metodoPago] || metodoPago;
   const nombreCompleto = `${nombre} ${apellido}`.trim();
-
   const datosCliente = { nombre: nombreCompleto, tel, ciudad, direccion, cedula, pagoLabel };
 
-  const mensaje = [
-    `Hola, Atenas 🩵`,
+  /* Emojis construidos por código — nunca se corrompen al guardar */
+  const e1 = String.fromCodePoint(0x1FA75); // 🩵
+  const e2 = String.fromCodePoint(0x1F4E6); // 📦
+  const e3 = String.fromCodePoint(0x2728);  // ✨
+  const pt = String.fromCodePoint(0x2022);  // •
+
+  const lineas = [
+    `Hola, Atenas ${e1}`,
     ``,
-    `estoy interesad@ en este pedido 📦`,
+    `estoy interesad@ en este pedido ${e2}`,
     ``,
     `Estos son mis datos:`,
     ``,
-    `* Nombre: ${nombreCompleto}`,
-    `* Teléfono: ${tel}`,
-    cedula ? `* Cédula: ${cedula}` : null,
-    `* Ciudad: ${ciudad}`,
-    `* Dirección: ${direccion}`,
-    `* Método de pago: ${pagoLabel}`,
-    (!ubicacionCartagena || metodoPago === 'contraentrega') ? `` : null,
-    !ubicacionCartagena ? 'El valor del envío se cotiza después y es adicional.' : null,
-    metodoPago === 'contraentrega' ? 'Se paga contra entrega, pero el envío se paga anticipado.' : null,
+    `${pt} Nombre: ${nombreCompleto}`,
+    `${pt} Tel\u00e9fono: ${tel}`,
+    cedula ? `${pt} C\u00e9dula: ${cedula}` : null,
+    `${pt} Ciudad: ${ciudad}`,
+    `${pt} Direcci\u00f3n: ${direccion}`,
+    `${pt} M\u00e9todo de pago: ${pagoLabel}`,
+    !ubicacionCartagena ? `${pt} El valor del env\u00edo se cotiza despu\u00e9s y es adicional.` : null,
+    metodoPago === 'contraentrega' ? `${pt} Se paga contra entrega, pero el env\u00edo se paga anticipado.` : null,
     ``,
-    `Quedo atenta a la Confirmación ✨`,
-  ].filter(line => line !== null).join('\n');
+    `Quedo atenta a la Confirmaci\u00f3n ${e3}`,
+  ].filter(l => l !== null).join('\n');
 
+  /* Generar PDF */
   let pdfData = null;
   try {
     pdfData = await generarFacturaPDF(datosCliente, carrito, { subtotal, descuento, domicilio, total });
   } catch (e) {
-    console.error('No se pudo generar la factura PDF:', e);
+    console.error('Error generando PDF:', e);
   }
 
-  // Intenta compartir directo a WhatsApp con el PDF adjunto (funciona en celular)
+  /* URL directo a tu número */
+  const urlWA = `https://wa.me/${NEGOCIO.whatsapp}?text=${encodeURIComponent(lineas)}`;
+
+  /* CELULAR: intenta compartir PDF + mensaje juntos */
   if (pdfData && navigator.canShare) {
-    const pdfFile = new File([pdfData.blob], pdfData.nombreArchivo, { type: 'application/pdf' });
-    if (navigator.canShare({ files: [pdfFile] })) {
+    const archivo = new File([pdfData.blob], pdfData.nombreArchivo, { type: 'application/pdf' });
+    if (navigator.canShare({ files: [archivo] })) {
       try {
-        await navigator.share({ files: [pdfFile], text: mensaje, title: 'Pedido Atenas Style Shop' });
+        await navigator.share({ files: [archivo], text: lineas, title: 'Pedido Atenas Style Shop' });
         cerrarCheckout();
         showToast('Pedido enviado', 'check');
         return;
-      } catch (e) {
-        if (e.name === 'AbortError') return; // el usuario canceló
+      } catch (err) {
+        if (err.name === 'AbortError') return;
       }
     }
   }
 
-  // Alternativa en computador: descarga el PDF y abre WhatsApp con el mensaje
+  /* ESCRITORIO: descarga PDF y abre WhatsApp */
   if (pdfData) {
     const a = document.createElement('a');
     a.href = URL.createObjectURL(pdfData.blob);
     a.download = pdfData.nombreArchivo;
     a.click();
   }
-  const url = `https://wa.me/${NEGOCIO.whatsapp}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, '_blank');
+  setTimeout(() => window.open(urlWA, '_blank'), 800);
   cerrarCheckout();
-  showToast('Factura descargada. Adjúntala en WhatsApp manualmente', 'check');
+  showToast('Factura descargada \u2014 adj\u00fantala en WhatsApp', 'check');
 }
