@@ -161,41 +161,21 @@ async function enviarPedido() {
     ``,
     `Quedo atenta a la Confirmaci\u00f3n ${e3}`,
   ].filter(l => l !== null).join('\n');
-
-  /* Generar PDF */
-  let pdfData = null;
-  try {
-    pdfData = await generarFacturaPDF(datosCliente, carrito, { subtotal, descuento, domicilio, total });
-  } catch (e) {
-    console.error('Error generando PDF:', e);
-  }
-
-  /* URL directo a tu número */
+/* URL directo a tu número — se abre ANTES del await para evitar bloqueo del navegador */
   const urlWA = `https://wa.me/${NEGOCIO.whatsapp}?text=${encodeURIComponent(lineas)}`;
+  window.open(urlWA, '_blank');
 
-  /* CELULAR: intenta compartir PDF + mensaje juntos */
-  if (pdfData && navigator.canShare) {
-    const archivo = new File([pdfData.blob], pdfData.nombreArchivo, { type: 'application/pdf' });
-    if (navigator.canShare({ files: [archivo] })) {
-      try {
-        await navigator.share({ files: [archivo], text: lineas, title: 'Pedido Atenas Style Shop' });
-        cerrarCheckout();
-        showToast('Pedido enviado', 'check');
-        return;
-      } catch (err) {
-        if (err.name === 'AbortError') return;
-      }
-    }
-  }
-
-  /* ESCRITORIO: descarga PDF y abre WhatsApp */
-  if (pdfData) {
+  /* Generar y descargar PDF */
+  try {
+    const pdfData = await generarFacturaPDF(datosCliente, carrito, { subtotal, descuento, domicilio, total });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(pdfData.blob);
     a.download = pdfData.nombreArchivo;
     a.click();
+  } catch (e) {
+    console.error('Error generando PDF:', e);
   }
-  setTimeout(() => window.open(urlWA, '_blank'), 800);
+
   cerrarCheckout();
-  showToast('Factura descargada \u2014 adj\u00fantala en WhatsApp', 'check');
+  showToast('Redirigiendo a WhatsApp\u2026 adjunta la factura descargada', 'check');
 }

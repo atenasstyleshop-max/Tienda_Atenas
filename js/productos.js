@@ -3,7 +3,7 @@
    ============================================================ */
 
 const CATEGORIAS = [
-  { valor: 'todos', label: 'Todos' },
+ { valor: 'todos', label: 'Todos', icon: true },
   { valor: 'capilar', label: 'Capilar' },
   { valor: 'facial', label: 'Facial' },
   { valor: 'corporal', label: 'Corporal' },
@@ -34,7 +34,7 @@ function renderFiltros() {
   const cont = document.getElementById('filtros');
   cont.innerHTML = CATEGORIAS.map(c => `
     <button class="filtro-btn ${c.valor === filtroActivo ? 'active' : ''}" onclick="filtrar('${c.valor}', this)">
-      ${c.valor !== 'todos' ? svgIconFor(c.valor) : ''} ${c.label}
+      ${svgIconFor(c.valor === 'todos' ? 'todos' : c.valor)} ${c.label}
     </button>
   `).join('');
 }
