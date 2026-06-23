@@ -195,3 +195,36 @@ async function descargarFacturaPedido() {
     showToast('Error generando la factura', 'warn');
   }
 }
+function validarFormulario() {
+  const nombre = document.getElementById('ch-nombre').value.trim();
+  const apellido = document.getElementById('ch-apellido').value.trim();
+  const tel = document.getElementById('ch-tel').value.trim();
+
+  if (!nombre) { showToast('Falta tu nombre', 'warn'); return null; }
+  if (!tel) { showToast('Falta tu WhatsApp', 'warn'); return null; }
+
+  let ciudad, direccion, cedula = '';
+
+  if (ubicacionCartagena) {
+    if (!nombreBarrioActual) { showToast('Selecciona tu barrio', 'warn'); return null; }
+    const dir = document.getElementById('ch-direccion').value.trim();
+    const referencia = document.getElementById('ch-referencia').value.trim();
+    if (!dir) { showToast('Falta la direcci\u00f3n', 'warn'); return null; }
+    ciudad = 'Cartagena';
+    direccion = `${nombreBarrioActual}, ${dir}${referencia ? ' (Punto de Referencia: ' + referencia + ')' : ''}`;
+  } else {
+    const ciudadFuera = document.getElementById('ch-ciudad').value.trim();
+    const dirFuera = document.getElementById('ch-direccion-fuera').value.trim();
+    cedula = document.getElementById('ch-cedula').value.trim();
+    if (!ciudadFuera) { showToast('Falta la ciudad', 'warn'); return null; }
+    if (!dirFuera) { showToast('Falta la direcci\u00f3n', 'warn'); return null; }
+    if (!cedula) { showToast('Falta tu n\u00famero de c\u00e9dula', 'warn'); return null; }
+    ciudad = ciudadFuera;
+    direccion = dirFuera;
+  }
+
+  return {
+    nombreCompleto: `${nombre} ${apellido}`.trim(),
+    tel, ciudad, direccion, cedula
+  };
+}
