@@ -1,11 +1,9 @@
 /* FILTROS */
 .filtros {
-  padding: 16px 12px 0;
-  display: flex; gap: 8px;
-  overflow-x: auto; scroll-snap-type: x mandatory;
-  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  padding: 20px 24px 0; display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
 }
-.filtros::-webkit-scrollbar { display: none; }
 .filtro-btn {
   white-space: nowrap; padding: 10px 14px; border-radius: 50px;
   border: 1.5px solid var(--gris-30); background: #fff; width: 100%;
