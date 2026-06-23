@@ -6,6 +6,7 @@
 <title>Atenas Style Shop — Tienda</title>
 <link rel="icon" type="image/png" href="assets/Logo.png">
 
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="css/variables.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/productos.css">
@@ -20,11 +21,11 @@
     <div class="logo-circle"><img src="assets/Logo.png" alt="Atenas Style Shop"></div>
     <div>
       <h1>Atenas Style Shop</h1>
-      <span>Bodega Mayorsita de Productos de Belleza</span>
+      <span>Bodega Mayorsita de Belleza</span>
     </div>
   </div>
   <button class="cart-btn" onclick="abrirCarrito()">
-    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
     Carrito
     <span class="cart-count" id="cart-count">0</span>
   </button>
@@ -57,7 +58,7 @@
 
 <!-- BÚSQUEDA -->
 <div class="busqueda-wrap">
-  <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+ <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
   <input type="text" id="busqueda-input" placeholder="Buscar producto..." oninput="buscarProductos(this.value)">
 </div>
 
@@ -226,6 +227,7 @@
 <script src="js/factura-pdf.js"></script>
 
 <script>
+  lucide.createIcons();
   document.querySelectorAll('.modal-close-btn, .cart-close').forEach(b => b.innerHTML = ICONS.close);
   initProductos();
   initBarrios();
