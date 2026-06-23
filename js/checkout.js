@@ -122,7 +122,7 @@ async function enviarPedido() {
   const e4 = String.fromCodePoint(0x1F4CB);
   const pt = String.fromCodePoint(0x2022);
 
-  const separador = '\u2500'.repeat(40);
+  const separador = '\u2500'.repeat(30);
 
   const lineas = [
     `Hola, Atenas ${e1}`,
