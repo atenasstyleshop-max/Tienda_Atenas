@@ -105,43 +105,23 @@ function renderResumen() {
 }
 
 async function enviarPedido() {
-  const nombre = document.getElementById('ch-nombre').value.trim();
-  const apellido = document.getElementById('ch-apellido').value.trim();
-  const tel = document.getElementById('ch-tel').value.trim();
+  const datos = validarFormulario();
+  if (!datos) return;
 
-  if (!nombre) { showToast('Falta tu nombre', 'warn'); return; }
-  if (!tel) { showToast('Falta tu WhatsApp', 'warn'); return; }
-
-  let ciudad, direccion, cedula = '';
-
-  if (ubicacionCartagena) {
-    if (!nombreBarrioActual) { showToast('Selecciona tu barrio', 'warn'); return; }
-    const dir = document.getElementById('ch-direccion').value.trim();
-    const referencia = document.getElementById('ch-referencia').value.trim();
-    if (!dir) { showToast('Falta la dirección', 'warn'); return; }
-    ciudad = 'Cartagena';
-    direccion = `${nombreBarrioActual}, ${dir}${referencia ? ' (Punto de Referencia: ' + referencia + ')' : ''}`;
-  } else {
-    const ciudadFuera = document.getElementById('ch-ciudad').value.trim();
-    const dirFuera = document.getElementById('ch-direccion-fuera').value.trim();
-    cedula = document.getElementById('ch-cedula').value.trim();
-    if (!ciudadFuera) { showToast('Falta la ciudad', 'warn'); return; }
-    if (!dirFuera) { showToast('Falta la dirección', 'warn'); return; }
-    if (!cedula) { showToast('Falta tu número de cédula', 'warn'); return; }
-    ciudad = ciudadFuera;
-    direccion = dirFuera;
-  }
-
+  const { nombreCompleto, tel, ciudad, direccion, cedula } = datos;
   const { subtotal, descuento, domicilio, total } = totalConDomicilio();
-  const pagoLabel = { efectivo: 'Efectivo', transferencia: 'Transferencia', contraentrega: 'Contra Entrega' }[metodoPago] || metodoPago;
-  const nombreCompleto = `${nombre} ${apellido}`.trim();
+  const pagoLabel = {
+    efectivo: 'Efectivo',
+    transferencia: 'Transferencia',
+    contraentrega: 'Contra Entrega'
+  }[metodoPago] || metodoPago;
+
   const datosCliente = { nombre: nombreCompleto, tel, ciudad, direccion, cedula, pagoLabel };
 
-  /* Emojis construidos por código — nunca se corrompen al guardar */
-  const e1 = String.fromCodePoint(0x1FA75); // 🩵
-  const e2 = String.fromCodePoint(0x1F4E6); // 📦
-  const e3 = String.fromCodePoint(0x2728);  // ✨
-  const pt = String.fromCodePoint(0x2022);  // •
+  const e1 = String.fromCodePoint(0x1FA75);
+  const e2 = String.fromCodePoint(0x1F4E6);
+  const e3 = String.fromCodePoint(0x2728);
+  const pt = String.fromCodePoint(0x2022);
 
   const lineas = [
     `Hola, Atenas ${e1}`,
@@ -161,21 +141,46 @@ async function enviarPedido() {
     ``,
     `Quedo atenta a la Confirmaci\u00f3n ${e3}`,
   ].filter(l => l !== null).join('\n');
-/* URL directo a tu número — se abre ANTES del await para evitar bloqueo del navegador */
-  const urlWA = `https://wa.me/${NEGOCIO.whatsapp}?text=${encodeURIComponent(lineas)}`;
-  window.open(urlWA, '_blank');
 
-  /* Generar y descargar PDF */
+  const urlWA = `https://wa.me/${NEGOCIO.whatsapp}?text=${encodeURIComponent(lineas)}`;
+
+  /* Intentar generar PDF */
+  let pdfData = null;
   try {
-    const pdfData = await generarFacturaPDF(datosCliente, carrito, { subtotal, descuento, domicilio, total });
+    pdfData = await generarFacturaPDF(datosCliente, carrito, { subtotal, descuento, domicilio, total });
+  } catch (e) {
+    console.error('Error PDF:', e);
+  }
+
+  /* CELULAR con Web Share API — manda mensaje + PDF juntos */
+  if (pdfData && navigator.canShare) {
+    const archivo = new File([pdfData.blob], pdfData.nombreArchivo, { type: 'application/pdf' });
+    if (navigator.canShare({ files: [archivo] })) {
+      try {
+        await navigator.share({
+          files: [archivo],
+          text: lineas,
+          title: 'Pedido Atenas Style Shop'
+        });
+        cerrarCheckout();
+        showToast('Pedido enviado', 'check');
+        return;
+      } catch (err) {
+        /* Si el usuario cancela el panel de compartir, no hacemos nada */
+        if (err.name === 'AbortError') return;
+        /* Si falla por otro motivo, cae al plan B */
+      }
+    }
+  }
+
+  /* PLAN B — escritorio o si share no está disponible */
+  if (pdfData) {
     const a = document.createElement('a');
     a.href = URL.createObjectURL(pdfData.blob);
     a.download = pdfData.nombreArchivo;
     a.click();
-  } catch (e) {
-    console.error('Error generando PDF:', e);
+    showToast('Factura descargada \u2014 adj\u00fantala en WhatsApp', 'check');
   }
-
+  window.open(urlWA, '_blank');
   cerrarCheckout();
-  showToast('Redirigiendo a WhatsApp\u2026 adjunta la factura descargada', 'check');
 }

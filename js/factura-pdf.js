@@ -163,3 +163,8 @@ function lineaPunteada(doc, y) {
   doc.line(25, y, 355, y);
   doc.setLineDashPattern([], 0);
 }
+
+/* Precarga el logo cuando carga la página para que el PDF se genere rápido */
+window.addEventListener('load', () => {
+  getLogoBase64().catch(() => {});
+});
