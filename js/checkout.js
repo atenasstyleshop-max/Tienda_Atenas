@@ -12,13 +12,24 @@ let nombreCiudadActual = '';
 
 async function initCiudades() {
   CIUDADES = await fetchCiudades();
-  const lista = document.getElementById('ciudad-select-list');
-  lista.innerHTML = CIUDADES.map(c => `
+  renderOpcionesCiudad(CIUDADES);
+}
+
+function renderOpcionesCiudad(lista) {
+  const cont = document.getElementById('ciudad-select-opciones');
+  if (!cont) return;
+  cont.innerHTML = lista.map(c => `
     <div class="custom-select-item" onclick="elegirCiudad('${c.nombre.replace(/'/g, "\\'")}')">
       <span>${c.nombre}</span>
       <span style="color:var(--gris-60);font-size:11px;">${c.departamento}</span>
     </div>
   `).join('');
+}
+
+function filtrarCiudades(texto) {
+  const q = texto.toLowerCase();
+  const filtradas = CIUDADES.filter(c => c.nombre.toLowerCase().includes(q));
+  renderOpcionesCiudad(filtradas);
 }
 
 function toggleCiudadDropdown() {
@@ -40,13 +51,24 @@ document.addEventListener('click', (e) => {
 
 async function initBarrios() {
   BARRIOS = await fetchBarrios();
-  const lista = document.getElementById('barrio-select-list');
-  lista.innerHTML = BARRIOS.map(b => `
+  renderOpcionesBarrio(BARRIOS);
+}
+
+function renderOpcionesBarrio(lista) {
+  const cont = document.getElementById('barrio-select-opciones');
+  if (!cont) return;
+  cont.innerHTML = lista.map(b => `
     <div class="custom-select-item" onclick="elegirBarrio('${b.nombre.replace(/'/g, "\\'")}', ${b.valor_domicilio})">
       <span>${b.nombre}</span>
       <span class="precio">${formatCOP(b.valor_domicilio)}</span>
     </div>
   `).join('');
+}
+
+function filtrarBarrios(texto) {
+  const q = texto.toLowerCase();
+  const filtrados = BARRIOS.filter(b => b.nombre.toLowerCase().includes(q));
+  renderOpcionesBarrio(filtrados);
 }
 
 function toggleBarrioDropdown() {

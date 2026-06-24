@@ -154,3 +154,11 @@
 .custom-select-item:last-child { border-bottom: none; }
 .custom-select-item:hover { background: var(--lila-bg); }
 .custom-select-item .precio { color: var(--rosa-dark); font-weight: 700; font-size: 12px; }
+.custom-select-search {
+  padding: 8px 10px; border-bottom: 1px solid var(--gris-30); position: sticky; top: 0; background: #fff; z-index: 2;
+}
+.custom-select-search input {
+  width: 100%; padding: 7px 10px; border: 1.5px solid var(--gris-30); border-radius: 8px;
+  font-family: var(--font-texto); font-size: 13px; outline: none;
+}
+.custom-select-search input:focus { border-color: var(--rosa-dark); }

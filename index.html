@@ -152,7 +152,12 @@
         <span id="barrio-select-label">Selecciona tu barrio...</span>
         <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
       </button>
-      <div class="custom-select-list" id="barrio-select-list"></div>
+      <div class="custom-select-list" id="barrio-select-list">
+        <div class="custom-select-search">
+          <input type="text" id="barrio-search" placeholder="Buscar barrio..." oninput="filtrarBarrios(this.value)">
+        </div>
+        <div id="barrio-select-opciones"></div>
+      </div>
     </div>
   </div>
   <div class="form-group"><label>Dirección completa</label><input type="text" id="ch-direccion" placeholder="Calle, carrera, número..."></div>
@@ -162,12 +167,17 @@
 <div id="bloque-fuera" style="display:none;">
   <div class="form-group">
     <label>Ciudad / Municipio</label>
-    <div class="custom-select" id="ciudad-select-wrap">
+   <div class="custom-select" id="ciudad-select-wrap">
       <button type="button" class="custom-select-btn" onclick="toggleCiudadDropdown()">
         <span id="ciudad-select-label">Selecciona tu ciudad...</span>
         <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
       </button>
-      <div class="custom-select-list" id="ciudad-select-list"></div>
+      <div class="custom-select-list" id="ciudad-select-list">
+        <div class="custom-select-search">
+          <input type="text" id="ciudad-search" placeholder="Buscar ciudad..." oninput="filtrarCiudades(this.value)">
+        </div>
+        <div id="ciudad-select-opciones"></div>
+      </div>
     </div>
   </div>
   <div class="form-group"><label>Dirección completa / Barrio</label><input type="text" id="ch-direccion-fuera" placeholder="Dirección y barrio"></div>
