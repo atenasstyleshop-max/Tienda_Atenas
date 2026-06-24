@@ -23,16 +23,25 @@ const ICONS = {
 };
 
 const CATEGORIA_ICONS = {
-  todos:      'grid-2x2',
-  capilar:    'wind',
-  facial:     'smile',
-  corporal:   'droplets',
-  maquillaje: 'palette',
-  accesorios: 'gem',
-  electricos: 'zap',
-  varios:     'package',
-  ropa:       'shirt',
+  todos: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="2"/><rect width="7" height="7" x="14" y="3" rx="2"/><rect width="7" height="7" x="14" y="14" rx="2"/><rect width="7" height="7" x="3" y="14" rx="2"/></svg>',
+
+  capilar: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1 3-3 5-3 8a3 3 0 0 0 6 0c0-3-2-5-3-8z"/><path d="M9 11c-2 1-4 3-4 5a4 4 0 0 0 4 4"/><path d="M15 11c2 1 4 3 4 5a4 4 0 0 1-4 4"/><path d="M12 20v1"/></svg>',
+
+  facial: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 4-2 6-3 7H8c-1-1-3-3-3-7a7 7 0 0 1 7-7z"/><path d="M9 17v1a3 3 0 0 0 6 0v-1"/><path d="M9 11h.01"/><path d="M15 11h.01"/><path d="M10 14s.5 1 2 1 2-1 2-1"/></svg>',
+
+  corporal: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/><path d="M8 8h8l1 6H7L8 8z"/><path d="M9 14l-1 6"/><path d="M15 14l1 6"/><path d="M7 8l-2 2"/><path d="M17 8l2 2"/></svg>',
+
+  maquillaje: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6l1 6H8L9 2z"/><rect x="8" y="8" width="8" height="11" rx="2"/><path d="M11 8v11"/><path d="M10 5h4"/></svg>',
+
+  accesorios: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2a5 5 0 0 1 5 5c0 1-.3 2-.8 2.8"/><path d="M7.8 9.8A5 5 0 0 1 7 7a5 5 0 0 1 5-5"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"/></svg>',
+
+  electricos: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h3V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3h3a1 1 0 0 1 .7 1.7l-8 8a1 1 0 0 1-1.4 0l-8-8A1 1 0 0 1 5 8z"/><path d="M12 3v2"/><path d="M19 12c0 3-3 6-7 9"/></svg>',
+
+  varios: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6c0-1 .5-2 2-2h1c.5 0 1 .5 1 1v10c0 .5-.5 1-1 1H6c-1.5 0-2-1-2-2V6z"/><path d="M10 4h1c.5 0 1 .3 1 .8V19c0 .5-.5.8-1 .8h-1"/><path d="M14 6c0-1.5 1-2 2-2s2 .5 2 2v1c0 1-.5 2-2 2s-2-1-2-2V6z"/><path d="M16 9v9c0 .5-.5 1-1 1"/></svg>',
+
+  ropa: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>',
 };
+
 function svgIconFor(categoria) {
   return CATEGORIA_ICONS[categoria] || ICONS.sparkle;
 }
