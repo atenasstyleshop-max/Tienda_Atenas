@@ -83,24 +83,25 @@
 /* Botón agregar / stepper de cantidad */
 .btn-agregar {
   background: var(--rosa-dark); color: #fff; border: none; border-radius: 50%;
-  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
   cursor: pointer; transition: background 0.2s, transform 0.1s; flex-shrink: 0;
 }
+.btn-agregar .icon-svg { width: 13px; height: 13px; }
 .btn-agregar .icon-svg { width: 16px; height: 16px; }
 .btn-agregar:hover { background: var(--lila-dark); transform: scale(1.1); }
 .btn-agregar:disabled { background: var(--gris-30); cursor: not-allowed; transform: none; }
 
 .stepper {
-  display: flex; align-items: center; gap: 6px;
-  background: var(--lila-bg); border-radius: 50px; padding: 4px;
+  display: flex; align-items: center; gap: 3px;
+  background: var(--lila-bg); border-radius: 50px; padding: 3px;
 }
 .stepper button {
-  width: 26px; height: 26px; border-radius: 50%; border: none;
-  background: #fff; color: var(--rosa-dark); font-size: 16px; font-weight: 700;
+  width: 22px; height: 22px; border-radius: 50%; border: none;
+  background: #fff; color: var(--rosa-dark); font-size: 13px; font-weight: 700;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
 }
 .stepper button:hover { background: var(--rosa-dark); color: #fff; }
-.stepper .stepper-num { font-size: 13px; font-weight: 700; min-width: 16px; text-align: center; }
+.stepper .stepper-num { font-size: 12px; font-weight: 700; min-width: 14px; text-align: center; }
 
 /* MODAL PRODUCTO */
 .overlay {
