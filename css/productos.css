@@ -60,17 +60,24 @@
 }
 .prod-footer { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
 .prod-precio {
-  font-family: var(--font-titulo); font-size: 17px; font-weight: 700; color: var(--rosa-dark);
-  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  font-family: var(--font-titulo);
+  font-size: 17px; font-weight: 700; color: var(--rosa-dark);
+  display: flex; align-items: center; gap: 6px; flex-wrap: nowrap;
 }
 .prod-tipo-badge {
   font-size: 8px; font-weight: 700; padding: 2px 6px; border-radius: 20px;
-  letter-spacing: 0.4px; text-transform: uppercase; white-space: nowrap; flex-shrink: 0;
+  letter-spacing: 0.4px; text-transform: uppercase; white-space: nowrap;
+  flex-shrink: 0; line-height: 1.6;
 }
 .prod-tipo-badge.mayor { background: var(--lila-bg); color: var(--lila-dark); }
 .prod-tipo-badge.detal { background: var(--rosa-bg); color: var(--rosa-dark); }
+
 @media (max-width: 600px) {
-  .prod-precio { flex-direction: column; gap: 2px; align-items: flex-start; }
+  .prod-precio {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
   .prod-footer { align-items: flex-end; }
 }
 /* Botón agregar / stepper de cantidad */

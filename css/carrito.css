@@ -134,7 +134,12 @@
 .custom-select-btn {
   width: 100%; padding: 12px 14px; border: 1.5px solid var(--gris-30); border-radius: 12px;
   background: #fff; display: flex; align-items: center; gap: 8px; cursor: pointer;
-  transition: border-color 0.2s; min-height: 48px;
+  transition: border-color 0.2s; height: 48px; box-sizing: border-box;
+}
+.custom-select-btn input {
+  flex: 1; border: none; outline: none; font-family: var(--font-texto);
+  font-size: 14px; color: var(--negro); background: transparent; cursor: text;
+  min-width: 0; height: 100%;
 }
 .custom-select-btn:hover { border-color: var(--rosa-dark); }
 .custom-select-btn input {
