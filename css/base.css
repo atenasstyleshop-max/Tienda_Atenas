@@ -60,7 +60,7 @@ h1, h2, h3, h4, .titulo-gordito { font-family: var(--font-titulo); font-weight: 
 /* HERO */
 .hero {
   background: linear-gradient(135deg, var(--lila-bg) 0%, var(--rosa-bg) 55%, #FFF8FB 100%);
-  padding: 70px 24px 50px; text-align: center; position: relative; overflow: hidden;
+  padding: 24px 24px 20px; text-align: center; position: relative; overflow: hidden;
 }
 .hero-deco { position: absolute; opacity: 0.55; pointer-events: none; animation: float 5s ease-in-out infinite; }
 .hero-deco.d1 { top: 18%; left: 8%; width: 34px; animation-delay: 0s; }
@@ -72,18 +72,17 @@ h1, h2, h3, h4, .titulo-gordito { font-family: var(--font-titulo); font-weight: 
   50% { transform: translateY(-14px) rotate(8deg); }
 }
 .hero-banner-img {
-  max-width: 380px;
-  width: 80%;
-  margin: 0 auto 18px;
+  max-width: 320px;
+  width: 75%;
+  margin: 0 auto;
   display: block;
-  filter: drop-shadow(0 16px 32px rgba(155,95,192,0.2));
-  animation: float 6s ease-in-out infinite;
   border-radius: 20px;
+  filter: drop-shadow(0 12px 24px rgba(155,95,192,0.2));
 }
 @media (max-width: 600px) {
   .hero-banner-img {
-    max-width: 280px;
-    width: 85%;
+    max-width: 260px;
+    width: 80%;
   }
 }
 .hero-eyebrow {
