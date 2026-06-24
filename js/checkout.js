@@ -294,3 +294,11 @@ function validarFormulario() {
     tel, ciudad, direccion, cedula
   };
 }
+function toggleBarrioDropdown() {
+  document.getElementById('barrio-select-list').classList.toggle('open');
+  document.getElementById('barrio-search').focus();
+}
+function toggleCiudadDropdown() {
+  document.getElementById('ciudad-select-list').classList.toggle('open');
+  document.getElementById('ciudad-search').focus();
+}

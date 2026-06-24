@@ -147,12 +147,15 @@
 <div id="bloque-cartagena">
  <div class="form-group">
     <label>Barrio</label>
-    <div class="custom-select" id="barrio-select-wrap">
-      <input type="text" class="custom-select-btn" id="barrio-search"
-        placeholder="Escribe tu barrio..."
-        oninput="filtrarBarrios(this.value); abrirBarrioDropdown()"
-        onfocus="abrirBarrioDropdown()"
-        autocomplete="off">
+   <div class="custom-select" id="barrio-select-wrap">
+      <div class="custom-select-btn" onclick="toggleBarrioDropdown()">
+        <input type="text" id="barrio-search"
+          placeholder="Selecciona o escribe tu barrio..."
+          oninput="filtrarBarrios(this.value)"
+          onclick="event.stopPropagation(); abrirBarrioDropdown()"
+          autocomplete="off">
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
       <div class="custom-select-list" id="barrio-select-list">
         <div id="barrio-select-opciones"></div>
       </div>
@@ -166,11 +169,14 @@
   <div class="form-group">
     <label>Ciudad / Municipio</label>
 <div class="custom-select" id="ciudad-select-wrap">
-      <input type="text" class="custom-select-btn" id="ciudad-search"
-        placeholder="Escribe tu ciudad..."
-        oninput="filtrarCiudades(this.value); abrirCiudadDropdown()"
-        onfocus="abrirCiudadDropdown()"
-        autocomplete="off">
+      <div class="custom-select-btn" onclick="toggleCiudadDropdown()">
+        <input type="text" id="ciudad-search"
+          placeholder="Selecciona o escribe tu ciudad..."
+          oninput="filtrarCiudades(this.value)"
+          onclick="event.stopPropagation(); abrirCiudadDropdown()"
+          autocomplete="off">
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
       <div class="custom-select-list" id="ciudad-select-list">
         <div id="ciudad-select-opciones"></div>
       </div>
