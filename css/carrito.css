@@ -132,9 +132,9 @@
 /* SELECTOR DE BARRIO PERSONALIZADO */
 .custom-select { position: relative; }
 .custom-select-btn {
-  width: 100%; padding: 10px 14px; border: 1.5px solid var(--gris-30); border-radius: 12px;
+  width: 100%; padding: 12px 14px; border: 1.5px solid var(--gris-30); border-radius: 12px;
   background: #fff; display: flex; align-items: center; gap: 8px; cursor: pointer;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s; min-height: 48px;
 }
 .custom-select-btn:hover { border-color: var(--rosa-dark); }
 .custom-select-btn input {

@@ -13,5 +13,5 @@ function showToast(msg, tipo = 'check') {
   t.innerHTML = (ICONS[tipo] || ICONS.check) + `<span>${msg}</span>`;
   t.classList.add('show');
   clearTimeout(window._toastTimeout);
-  window._toastTimeout = setTimeout(() => t.classList.remove('show'), 2000);
+  window._toastTimeout = setTimeout(() => t.classList.remove('show'), 1200);
 }
