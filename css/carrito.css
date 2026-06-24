@@ -7,9 +7,11 @@
 }
 .cart-drawer.open { transform: translateX(0); }
 .cart-header {
-  padding: 20px 24px; border-bottom: 1px solid var(--gris-30);
-  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid var(--gris-30);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
+.cart-header h3 { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; }
+.cart-close { flex-shrink: 0; margin-left: auto; }
 .cart-header h3 { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
 .cart-close {
   background: var(--lila-bg); border: none; border-radius: 50%; width: 36px; height: 36px;
