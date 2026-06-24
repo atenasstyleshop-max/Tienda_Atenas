@@ -43,7 +43,7 @@ function actualizarCarrito() {
   const totalesEl = document.getElementById('cart-totales');
 
   if (carrito.length === 0) {
-    itemsEl.innerHTML = `<div class="empty-cart">${ICONS.bag}<p>Tu carrito está vacío</p></div>`;
+   itemsEl.innerHTML = `<div class="empty-cart">${ICONS.bag}<p>Aún no hay productos seleccionados</p></div>`;
     totalesEl.style.display = 'none';
   } else {
     itemsEl.innerHTML = carrito.map(i => {

@@ -9,7 +9,7 @@ body {
 
 h1, h2, h3, h4, .titulo-gordito { font-family: var(--font-titulo); font-weight: 700; }
 .icon-svg { width: 1em; height: 1em; display: inline-block; vertical-align: -0.15em; fill: currentColor; stroke-linecap: round; stroke-linejoin: round; }
-.cart-btn .icon-svg { width: 18px; height: 18px; flex-shrink: 0; }
+.cart-btn .icon-svg { width: 18px; height: 22px; flex-shrink: 0; }
 
 /* HEADER */
 .header {
