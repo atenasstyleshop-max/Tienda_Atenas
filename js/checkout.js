@@ -7,6 +7,36 @@ let ubicacionCartagena = true;
 let domicilioActual = 0;
 let nombreBarrioActual = '';
 let BARRIOS = [];
+let CIUDADES = [];
+let nombreCiudadActual = '';
+
+async function initCiudades() {
+  CIUDADES = await fetchCiudades();
+  const lista = document.getElementById('ciudad-select-list');
+  lista.innerHTML = CIUDADES.map(c => `
+    <div class="custom-select-item" onclick="elegirCiudad('${c.nombre.replace(/'/g, "\\'")}')">
+      <span>${c.nombre}</span>
+      <span style="color:var(--gris-60);font-size:11px;">${c.departamento}</span>
+    </div>
+  `).join('');
+}
+
+function toggleCiudadDropdown() {
+  document.getElementById('ciudad-select-list').classList.toggle('open');
+}
+
+function elegirCiudad(nombre) {
+  nombreCiudadActual = nombre;
+  document.getElementById('ciudad-select-label').textContent = nombre;
+  document.getElementById('ciudad-select-list').classList.remove('open');
+}
+
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('ciudad-select-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('ciudad-select-list')?.classList.remove('open');
+  }
+});
 
 async function initBarrios() {
   BARRIOS = await fetchBarrios();
@@ -122,7 +152,7 @@ async function enviarPedido() {
   const e4 = String.fromCodePoint(0x1F4CB);
   const pt = String.fromCodePoint(0x2022);
 
-  const separador = '\u2500'.repeat(25);
+  const separador = '\u2500'.repeat(20);
 
   const lineas = [
     `Hola, Atenas ${e1}`,
@@ -217,14 +247,13 @@ function validarFormulario() {
     if (!dir) { showToast('Falta la direcci\u00f3n', 'warn'); return null; }
     ciudad = 'Cartagena';
     direccion = `${nombreBarrioActual}, ${dir}${referencia ? ' (Punto de Referencia: ' + referencia + ')' : ''}`;
-  } else {
-    const ciudadFuera = document.getElementById('ch-ciudad').value.trim();
+ } else {
+    if (!nombreCiudadActual) { showToast('Selecciona tu ciudad', 'warn'); return null; }
     const dirFuera = document.getElementById('ch-direccion-fuera').value.trim();
     cedula = document.getElementById('ch-cedula').value.trim();
-    if (!ciudadFuera) { showToast('Falta la ciudad', 'warn'); return null; }
     if (!dirFuera) { showToast('Falta la direcci\u00f3n', 'warn'); return null; }
     if (!cedula) { showToast('Falta tu n\u00famero de c\u00e9dula', 'warn'); return null; }
-    ciudad = ciudadFuera;
+    ciudad = nombreCiudadActual;
     direccion = dirFuera;
   }
 

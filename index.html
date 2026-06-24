@@ -160,7 +160,16 @@
 </div>
 
 <div id="bloque-fuera" style="display:none;">
-  <div class="form-group"><label>Ciudad</label><input type="text" id="ch-ciudad" placeholder="Ej: Bogotá, Medellín..."></div>
+  <div class="form-group">
+    <label>Ciudad / Municipio</label>
+    <div class="custom-select" id="ciudad-select-wrap">
+      <button type="button" class="custom-select-btn" onclick="toggleCiudadDropdown()">
+        <span id="ciudad-select-label">Selecciona tu ciudad...</span>
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="custom-select-list" id="ciudad-select-list"></div>
+    </div>
+  </div>
   <div class="form-group"><label>Dirección completa / Barrio</label><input type="text" id="ch-direccion-fuera" placeholder="Dirección y barrio"></div>
   <div class="form-group"><label>Número de cédula</label><input type="text" id="ch-cedula" placeholder="Para la guía de envío"></div>
 </div>
@@ -229,8 +238,9 @@
 <script>
   lucide.createIcons();
   document.querySelectorAll('.modal-close-btn, .cart-close').forEach(b => b.innerHTML = ICONS.close);
-  initProductos();
+ initProductos();
   initBarrios();
+  initCiudades();
 </script>
 </body>
 </html>

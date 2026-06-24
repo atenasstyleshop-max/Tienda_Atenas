@@ -30,3 +30,11 @@ async function fetchBarrios() {
   if (error) { console.error('Error cargando barrios:', error); return []; }
   return data || [];
 }
+async function fetchCiudades() {
+  const { data, error } = await sb
+    .from('ciudades_colombia')
+    .select('nombre, departamento')
+    .order('nombre');
+  if (error) { console.error('Error cargando ciudades:', error); return []; }
+  return data || [];
+}
