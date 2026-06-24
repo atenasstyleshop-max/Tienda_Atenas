@@ -10,45 +10,7 @@ let BARRIOS = [];
 let CIUDADES = [];
 let nombreCiudadActual = '';
 
-async function initCiudades() {
-  CIUDADES = await fetchCiudades();
-  renderOpcionesCiudad(CIUDADES);
-}
-
-function renderOpcionesCiudad(lista) {
-  const cont = document.getElementById('ciudad-select-opciones');
-  if (!cont) return;
-  cont.innerHTML = lista.map(c => `
-    <div class="custom-select-item" onclick="elegirCiudad('${c.nombre.replace(/'/g, "\\'")}')">
-      <span>${c.nombre}</span>
-      <span style="color:var(--gris-60);font-size:11px;">${c.departamento}</span>
-    </div>
-  `).join('');
-}
-
-function filtrarCiudades(texto) {
-  const q = texto.toLowerCase();
-  const filtradas = CIUDADES.filter(c => c.nombre.toLowerCase().includes(q));
-  renderOpcionesCiudad(filtradas);
-}
-
-function toggleCiudadDropdown() {
-  document.getElementById('ciudad-select-list').classList.toggle('open');
-}
-
-function elegirCiudad(nombre) {
-  nombreCiudadActual = nombre;
-  document.getElementById('ciudad-select-label').textContent = nombre;
-  document.getElementById('ciudad-select-list').classList.remove('open');
-}
-
-document.addEventListener('click', (e) => {
-  const wrap = document.getElementById('ciudad-select-wrap');
-  if (wrap && !wrap.contains(e.target)) {
-    document.getElementById('ciudad-select-list')?.classList.remove('open');
-  }
-});
-
+/* ── BARRIOS ── */
 async function initBarrios() {
   BARRIOS = await fetchBarrios();
   renderOpcionesBarrio(BARRIOS);
@@ -66,30 +28,64 @@ function renderOpcionesBarrio(lista) {
 }
 
 function filtrarBarrios(texto) {
-  const q = texto.toLowerCase();
-  const filtrados = BARRIOS.filter(b => b.nombre.toLowerCase().includes(q));
-  renderOpcionesBarrio(filtrados);
+  renderOpcionesBarrio(BARRIOS.filter(b => b.nombre.toLowerCase().includes(texto.toLowerCase())));
+  document.getElementById('barrio-select-list').classList.add('open');
 }
 
-function toggleBarrioDropdown() {
-  document.getElementById('barrio-select-list').classList.toggle('open');
+function abrirBarrioDropdown() {
+  document.getElementById('barrio-select-list').classList.add('open');
 }
 
 function elegirBarrio(nombre, precio) {
   domicilioActual = precio;
   nombreBarrioActual = nombre;
-  document.getElementById('barrio-select-label').textContent = nombre;
+  document.getElementById('barrio-search').value = nombre;
   document.getElementById('barrio-select-list').classList.remove('open');
   renderResumen();
 }
 
+/* ── CIUDADES ── */
+async function initCiudades() {
+  CIUDADES = await fetchCiudades();
+  renderOpcionesCiudad(CIUDADES);
+}
+
+function renderOpcionesCiudad(lista) {
+  const cont = document.getElementById('ciudad-select-opciones');
+  if (!cont) return;
+  cont.innerHTML = lista.map(c => `
+    <div class="custom-select-item" onclick="elegirCiudad('${c.nombre.replace(/'/g, "\\'")}')">
+      <span>${c.nombre}</span>
+      <span style="color:var(--gris-60);font-size:11px;">${c.departamento}</span>
+    </div>
+  `).join('');
+}
+
+function filtrarCiudades(texto) {
+  renderOpcionesCiudad(CIUDADES.filter(c => c.nombre.toLowerCase().includes(texto.toLowerCase())));
+  document.getElementById('ciudad-select-list').classList.add('open');
+}
+
+function abrirCiudadDropdown() {
+  document.getElementById('ciudad-select-list').classList.add('open');
+}
+
+function elegirCiudad(nombre) {
+  nombreCiudadActual = nombre;
+  document.getElementById('ciudad-search').value = nombre;
+  document.getElementById('ciudad-select-list').classList.remove('open');
+}
+
+/* Cierra ambos dropdowns al hacer clic fuera */
 document.addEventListener('click', (e) => {
-  const wrap = document.getElementById('barrio-select-wrap');
-  if (wrap && !wrap.contains(e.target)) {
-    document.getElementById('barrio-select-list').classList.remove('open');
-  }
+  ['barrio-select-wrap', 'ciudad-select-wrap'].forEach(id => {
+    const wrap = document.getElementById(id);
+    const list = wrap?.querySelector('.custom-select-list');
+    if (wrap && !wrap.contains(e.target)) list?.classList.remove('open');
+  });
 });
 
+/* ── UBICACIÓN Y PAGO ── */
 function seleccionarUbicacion(esCartagena) {
   ubicacionCartagena = esCartagena;
   document.getElementById('opt-ciudad-si').classList.toggle('selected', esCartagena);
@@ -110,7 +106,11 @@ function seleccionarPago(tipo) {
   metodoPago = tipo;
   const grupo = ubicacionCartagena ? '#metodo-cartagena' : '#metodo-fuera';
   document.querySelectorAll(`${grupo} .pago-opt`).forEach(el => el.classList.remove('selected'));
-  const idMap = { efectivo: 'opt-efectivo', transferencia: ubicacionCartagena ? 'opt-transferencia' : 'opt-transferencia-fuera', contraentrega: 'opt-contraentrega' };
+  const idMap = {
+    efectivo: 'opt-efectivo',
+    transferencia: ubicacionCartagena ? 'opt-transferencia' : 'opt-transferencia-fuera',
+    contraentrega: 'opt-contraentrega'
+  };
   document.getElementById(idMap[tipo]).classList.add('selected');
   actualizarVisibilidadPago();
 }
@@ -119,13 +119,25 @@ function actualizarVisibilidadPago() {
   document.getElementById('aviso-contraentrega').style.display = metodoPago === 'contraentrega' ? 'block' : 'none';
 }
 
+/* ── CHECKOUT ── */
 function abrirCheckout() {
   if (carrito.length === 0) return;
   cerrarCarrito();
+  /* resetear campos al abrir */
+  nombreBarrioActual = '';
+  nombreCiudadActual = '';
+  domicilioActual = 0;
+  const bs = document.getElementById('barrio-search');
+  const cs = document.getElementById('ciudad-search');
+  if (bs) bs.value = '';
+  if (cs) cs.value = '';
   renderResumen();
   document.getElementById('checkout-modal').classList.add('open');
 }
-function cerrarCheckout() { document.getElementById('checkout-modal').classList.remove('open'); }
+
+function cerrarCheckout() {
+  document.getElementById('checkout-modal').classList.remove('open');
+}
 
 function totalConDomicilio() {
   const { subtotal, descuento, total } = calcularTotales();
@@ -156,6 +168,7 @@ function renderResumen() {
   `;
 }
 
+/* ── ENVÍO DEL PEDIDO ── */
 async function enviarPedido() {
   const datos = validarFormulario();
   if (!datos) return;
@@ -173,8 +186,7 @@ async function enviarPedido() {
   const e3 = String.fromCodePoint(0x2728);
   const e4 = String.fromCodePoint(0x1F4CB);
   const pt = String.fromCodePoint(0x2022);
-
-  const separador = '\u2500'.repeat(20);
+  const sep = '\u2500'.repeat(20);
 
   const lineas = [
     `Hola, Atenas ${e1}`,
@@ -192,7 +204,7 @@ async function enviarPedido() {
     !ubicacionCartagena ? `${pt} El env\u00edo se cotiza despu\u00e9s.` : null,
     metodoPago === 'contraentrega' ? `${pt} El env\u00edo se paga anticipado.` : null,
     ``,
-    separador,
+    sep,
     `*Resumen del pedido* ${e4}`,
     ``,
     ...carrito.map(i => `${pt} ${i.nombre} (x${i.cantidad})  *${formatCOP(i.precio * i.cantidad)}*`),
@@ -201,7 +213,7 @@ async function enviarPedido() {
     domicilio > 0 ? `Domicilio: *${formatCOP(domicilio)}*` : null,
     ``,
     `*TOTAL: ${formatCOP(total)}*`,
-    separador,
+    sep,
     ``,
     `Quedo atenta a la Confirmaci\u00f3n ${e3}`,
   ].filter(l => l !== null).join('\n');
@@ -209,14 +221,12 @@ async function enviarPedido() {
   window.open(`https://wa.me/${NEGOCIO.whatsapp}?text=${encodeURIComponent(lineas)}`, '_blank');
   cerrarCheckout();
 
-  /* Guardar datos para la factura por si la quiere descargar después */
   window._ultimoPedido = {
     datosCliente: { nombre: nombreCompleto, tel, ciudad, direccion, cedula, pagoLabel },
     items: [...carrito],
     totales: { subtotal, descuento, domicilio, total }
   };
 
-  /* Mostrar botón flotante para descargar la factura */
   mostrarBotonFactura();
 }
 
@@ -230,8 +240,6 @@ function mostrarBotonFactura() {
     document.body.appendChild(btn);
   }
   btn.style.display = 'flex';
-
-  /* Se oculta solo después de 30 segundos */
   setTimeout(() => { btn.style.display = 'none'; }, 30000);
 }
 
@@ -252,6 +260,8 @@ async function descargarFacturaPedido() {
     showToast('Error generando la factura', 'warn');
   }
 }
+
+/* ── VALIDACIÓN ── */
 function validarFormulario() {
   const nombre = document.getElementById('ch-nombre').value.trim();
   const apellido = document.getElementById('ch-apellido').value.trim();
@@ -269,7 +279,7 @@ function validarFormulario() {
     if (!dir) { showToast('Falta la direcci\u00f3n', 'warn'); return null; }
     ciudad = 'Cartagena';
     direccion = `${nombreBarrioActual}, ${dir}${referencia ? ' (Punto de Referencia: ' + referencia + ')' : ''}`;
- } else {
+  } else {
     if (!nombreCiudadActual) { showToast('Selecciona tu ciudad', 'warn'); return null; }
     const dirFuera = document.getElementById('ch-direccion-fuera').value.trim();
     cedula = document.getElementById('ch-cedula').value.trim();
