@@ -72,9 +72,19 @@ h1, h2, h3, h4, .titulo-gordito { font-family: var(--font-titulo); font-weight: 
   50% { transform: translateY(-14px) rotate(8deg); }
 }
 .hero-banner-img {
-  max-width: 240px; width: 60%; margin: 0 auto 18px; display: block;
-  filter: drop-shadow(0 12px 24px rgba(155,95,192,0.18));
+  max-width: 380px;
+  width: 80%;
+  margin: 0 auto 18px;
+  display: block;
+  filter: drop-shadow(0 16px 32px rgba(155,95,192,0.2));
   animation: float 6s ease-in-out infinite;
+  border-radius: 20px;
+}
+@media (max-width: 600px) {
+  .hero-banner-img {
+    max-width: 280px;
+    width: 85%;
+  }
 }
 .hero-eyebrow {
   font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--rosa-dark);
