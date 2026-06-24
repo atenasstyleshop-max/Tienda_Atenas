@@ -148,14 +148,12 @@
  <div class="form-group">
     <label>Barrio</label>
     <div class="custom-select" id="barrio-select-wrap">
-      <button type="button" class="custom-select-btn" onclick="toggleBarrioDropdown()">
-        <span id="barrio-select-label">Selecciona tu barrio...</span>
-        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-      </button>
+      <input type="text" class="custom-select-btn" id="barrio-search"
+        placeholder="Escribe tu barrio..."
+        oninput="filtrarBarrios(this.value); abrirBarrioDropdown()"
+        onfocus="abrirBarrioDropdown()"
+        autocomplete="off">
       <div class="custom-select-list" id="barrio-select-list">
-        <div class="custom-select-search">
-          <input type="text" id="barrio-search" placeholder="Buscar barrio..." oninput="filtrarBarrios(this.value)">
-        </div>
         <div id="barrio-select-opciones"></div>
       </div>
     </div>
@@ -167,15 +165,13 @@
 <div id="bloque-fuera" style="display:none;">
   <div class="form-group">
     <label>Ciudad / Municipio</label>
-   <div class="custom-select" id="ciudad-select-wrap">
-      <button type="button" class="custom-select-btn" onclick="toggleCiudadDropdown()">
-        <span id="ciudad-select-label">Selecciona tu ciudad...</span>
-        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-      </button>
+<div class="custom-select" id="ciudad-select-wrap">
+      <input type="text" class="custom-select-btn" id="ciudad-search"
+        placeholder="Escribe tu ciudad..."
+        oninput="filtrarCiudades(this.value); abrirCiudadDropdown()"
+        onfocus="abrirCiudadDropdown()"
+        autocomplete="off">
       <div class="custom-select-list" id="ciudad-select-list">
-        <div class="custom-select-search">
-          <input type="text" id="ciudad-search" placeholder="Buscar ciudad..." oninput="filtrarCiudades(this.value)">
-        </div>
         <div id="ciudad-select-opciones"></div>
       </div>
     </div>
