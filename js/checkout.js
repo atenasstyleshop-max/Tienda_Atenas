@@ -54,7 +54,7 @@ function renderOpcionesCiudad(lista) {
   const cont = document.getElementById('ciudad-select-opciones');
   if (!cont) return;
   cont.innerHTML = lista.map(c => `
-    <div class="custom-select-item" onclick="elegirCiudad('${c.nombre.replace(/'/g, "\\'")}')">
+    <div class="custom-select-item" onclick="elegirCiudad('${c.nombre.replace(/'/g, "\\'")}', '${c.departamento.replace(/'/g, "\\'")}')">
       <span>${c.nombre}</span>
       <span style="color:var(--gris-60);font-size:11px;">${c.departamento}</span>
     </div>
@@ -70,9 +70,9 @@ function abrirCiudadDropdown() {
   document.getElementById('ciudad-select-list').classList.add('open');
 }
 
-function elegirCiudad(nombre) {
+function elegirCiudad(nombre, departamento) {
   nombreCiudadActual = nombre;
-  document.getElementById('ciudad-search').value = nombre;
+  document.getElementById('ciudad-search').value = `${nombre}, ${departamento}`;
   document.getElementById('ciudad-select-list').classList.remove('open');
 }
 

@@ -147,8 +147,8 @@
 .custom-select-list {
   position: absolute; top: calc(100% + 6px); left: 0; right: 0;
   background: #fff; border: 1.5px solid var(--gris-30); border-radius: 12px;
-  max-height: 220px; overflow-y: auto; z-index: 50;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  max-height: 200px; overflow-y: auto; z-index: 50;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   display: none;
 }
 .custom-select-list.open { display: block; }
