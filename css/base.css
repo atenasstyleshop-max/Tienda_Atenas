@@ -93,8 +93,9 @@ h1, h2, h3, h4, .titulo-gordito { font-family: var(--font-titulo); font-weight: 
 /* CUPÓN */
 .cupon-bar {
   background: linear-gradient(90deg, var(--lila-dark), var(--rosa-dark));
-  color: #fff; padding: 9px 0; overflow: hidden; white-space: nowrap;
+  color: #fff; padding: 6px 0; overflow: hidden; white-space: nowrap;
 }
+.cupon-bar-track span { font-size: 12px; }
 .cupon-bar-track {
   display: inline-flex; gap: 60px;
   animation: ticker 20s linear infinite;
